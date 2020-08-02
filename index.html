@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+  <style>
+    #dialog {
+      display: flex;
+      flex-flow: column;
+      align-items: stretch;
+      height: 90vh;
+    }
+
+    #signin {
+      flex: 0 1 auto;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #display {
+      flex: 1 1 auto;
+      overflow-y: scroll;
+      font-style: italic;
+      color:cadetblue;
+    }
+
+    #text {
+      color : black;
+      font-style:normal ;
+      font-weight: bold;
+    }
+
+    #sender{
+      color : white;
+      background-color: cornflowerblue;
+      border-radius: 10px;
+      padding: 2px 6px 2px 6px;
+    }
+
+    #privateSender{
+      color : white;
+      background-color: tomato;
+      border-radius: 10px;
+      padding: 2px 6px 2px 6px;
+    }
+
+    #date{
+      color : grey;
+      opacity: 80%;
+    }
+
+    #sizeImage{
+      width: 100px;
+    }
+
+    .grey {
+      color :red;
+    }
+
+  </style>
+  <title>chat</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="columns">
+      <div id="dialog" class="column col-9 col-sm-12">
+        <form name="signin" class="mt-2">
+          <div class="input-group">
+            <input name="nickname" pattern = "[A-Za-z0-9.\-_]{1,16}" type="text" class="form-input" placeholder="choose a nickname (16 characters max.)">
+            <input type="submit" class="btn btn-primary input-group-btn" value="join">
+          </div>
+        </form>
+
+        <div class="toast toast-error mt-2 hidden">
+        </div>
+        
+        <form name="send" class="mt-2 hidden">
+          <div class="input-group">
+            <span class="input-group-addon hide-sm">raoul</span>
+            <input name="message" type="text" class="form-input" placeholder="type your message here">
+            <label>
+                <i class="icon icon-photo" style="font-size: 36px;"></i>
+                <input type="file" class="hidden" accept="image/gif, image/jpeg, image/png"  id="imageSend">
+              </label>
+            <input type="submit" class="btn btn-primary input-group-btn" value="send">
+          </div>
+        </form>
+
+        <div id="display" class="bg-gray p-2 mt-2">
+        </div>
+        
+
+      </div>
+      <div id="users" class="column col-3 col-sm-12">
+        <table class="table table-bordered table-striped table-light">
+          <thead style = 'font-weight:bold;' name="theadUsers"></thead>
+          <tbody name="tbodyUsers"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal" id="modal">
+      <a href="#close" class="modal-overlay close" aria-label="Close"></a>
+      <div class="modal-container">
+        <div class="modal-header">
+          <a href="#close" class="btn btn-clear float-right close" aria-label="Close"></a>
+          <div id="recipient" class="modal-title h5"></div>
+        </div>
+        <div class="modal-body">
+          <div class="content">
+            <form name="private" class="mt-2">
+              <div class="input-group">
+                <span id="userSender" class="input-group-addon hide-sm"></span>
+                <input name="privateMessage" type="text" class="form-input" placeholder="type your message here">
+                <label>
+                    <i class="icon icon-photo" style="font-size: 36px;"></i>
+                    <input type="file" class="hidden" accept="image/gif, image/jpeg, image/png"  id="imageSendPrivate">
+                  </label>
+                <input type="submit" style="background-color:tomato" class="btn btn-primary input-group-btn" value="send">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/client.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+</body>
+
+</html>
